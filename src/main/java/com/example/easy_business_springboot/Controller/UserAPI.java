@@ -14,7 +14,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/user")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 public class UserAPI {
     @Autowired
     public UserRepo userRepo;

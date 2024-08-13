@@ -13,7 +13,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/licence")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 public class LicenseAPI {
     @Autowired
     public LicenseRepo licenseRepo;
@@ -28,7 +29,28 @@ public class LicenseAPI {
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
         }
     }
+    @PatchMapping("{licence_id}/status")
+    public ResponseEntity<License> updateStatus(@PathVariable long licence_id){
+        License license = licenseRepo.findById(licence_id).orElseThrow();
+        if (license.getStatus().equals("Pending")){
+            license.setStatus("Accepted");
+        }else {
+            license.setStatus("Cancel");
+        }
+        licenseRepo.save(license);
+        return ResponseEntity.ok(license);
+    }
 
+    @PatchMapping("/customer/{licence_id}/status")
+    public ResponseEntity<License> updatesStatus(@PathVariable long licence_id){
+        License license = licenseRepo.findById(licence_id).orElseThrow();
+        if (license.getStatus().equals("Pending")){
+
+            license.setStatus("Cancel");
+        }
+        licenseRepo.save(license);
+        return ResponseEntity.ok(license);
+    }
 
     @GetMapping("/getallLicense")
     public ResponseEntity<?> getLicense(){

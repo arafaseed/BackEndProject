@@ -12,7 +12,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customer")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 
 public class CustomerAPI {
     @Autowired
@@ -74,7 +75,7 @@ public class CustomerAPI {
         }
     }
     @DeleteMapping("/delete/{userID}")
-    public ResponseEntity<?> deleteApplication(@PathVariable Long userID){
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long userID){
         try {
             customerRepo.deleteById(userID);
             return new ResponseEntity<>("Customer Deleted Successfull",HttpStatus.OK);

@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Entity
 public class Customer extends User {
-    private String name;
+
     private String zan_Id;
     private String address;
 

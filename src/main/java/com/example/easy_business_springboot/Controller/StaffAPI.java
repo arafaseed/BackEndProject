@@ -13,7 +13,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/staff")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 public class StaffAPI {
     @Autowired
     public StaffRepo staffRepo;
