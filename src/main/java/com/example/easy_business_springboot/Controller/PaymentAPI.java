@@ -42,22 +42,7 @@ public class PaymentAPI {
     }
 
 
-    //API FOR Update Payment status
 
-    @PutMapping("/updatePaymentStatus/{paymentId}")
-    public ResponseEntity<String> updatePaymentStatus(@PathVariable("paymentId") Long payment_id,@RequestBody Payment payment) {
-
-        Optional<Payment> paymentOptional = paymentRepo.findById(payment_id);
-
-        if (paymentOptional.isPresent()) {
-            Payment payment1 = paymentOptional.get();
-            payment1.setStatus(payment.getStatus());
-            paymentRepo.save(payment);
-            return ResponseEntity.ok("Payment status updated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment not found");
-        }
-    }
 
 
 
@@ -75,13 +60,7 @@ public class PaymentAPI {
         }
     }
 
-    @PatchMapping("/update/{payment_id}")
-    public ResponseEntity<String> updatePaymentStatus(@PathVariable Long payment_id) {
-        Payment payment = paymentRepo.findById(payment_id).orElseThrow(); // Retrieve the payment entity
-        payment.setStatus("Renew"); // Update the status field
-        paymentRepo.save(payment); // Save the changes
-        return ResponseEntity.ok("Payment status updated successfully");
-    }
+
 
     @GetMapping("/byId/{payment_id}")
     public ResponseEntity<?> getByID(@PathVariable Long payment_id) {
@@ -111,89 +90,13 @@ public class PaymentAPI {
     }
 
 
-//    @PostMapping("/addPayments")
-//    public ResponseEntity<Payment> pay(@RequestBody Payment payment) {
-//        // Generate control number based on license ID
-//        payment.setControl_number("CN-" + System.currentTimeMillis());
-//
-//        // Save payment
-//        Payment savedPayment = paymentRepo.save(payment);
-//        return ResponseEntity.ok(savedPayment);
-//
-//}
 
-//    @GetMapping("/control_number/{licence_id}")
-//    public ResponseEntity<String>  generate(@PathVariable Long licence_id){
-//        License license = licenseRepo.findById(licence_id).orElseThrow();
-//        Payment payment = new Payment();
-//        payment.setLicense(license);
-//        payment.setAmount(0L);
-//
-//        paymentRepo.save(payment);
-//        return  new ResponseEntity<>(payment.getControl_number(),HttpStatus.OK);
-//
-//    }
-
-//    @GetMapping("/control_number/{licence_id}/{years}")
-//    public ResponseEntity<String> generate(@PathVariable Long licence_id, @PathVariable int years){
-//        License license = licenseRepo.findById(licence_id).orElseThrow();
-//        Long year = Long.valueOf(years);
-//        Payment payment = paymentRepo.findByLicenseAndYears(license, year);
-//        Payment endDates = paymentRepo.getEndLastByLicenceId(licence_id);
-//
-//
-//        if(payment == null) {
-//            payment = new Payment();
-//            payment.setLicense(license);
-//            payment.setAmount(0L);
-//            payment.setYears(year);
-//
-//            LocalDate currentDate = LocalDate.now();
-//            LocalDate endDate = currentDate.plusYears(years);
-//
-//            payment.setStartDate(currentDate);
-//            payment.setEndDate(endDate);
-//        } else {
-//            if(endDates.compareTo(LocalDate.now()) < 0) {
-//                payment.setStartDate(LocalDate.now());
-//                payment.setEndDate(LocalDate.now().plusYears(years));
-//            }
-//        }
-//
-//        paymentRepo.save(payment);
-//        return new ResponseEntity<>(payment.getControl_number(), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/control_number/{licence_id}/{years}")
-//    public ResponseEntity<String> generate(@PathVariable Long licence_id, @PathVariable int years){
-//        License license = licenseRepo.findById(licence_id).orElseThrow();
-//        Payment payment = paymentRepo.findByLicenseAndYears(license, (long) years);
-//        Payment endDates = paymentRepo.getEndLastByLicenceId(licence_id);
-//
-//        if(payment == null) {
-//            payment = new Payment();
-//            payment.setLicense(license);
-//            payment.setAmount(0L);
-//            payment.setYears((long) years);
-//
-//            LocalDate currentDate = LocalDate.now();
-//            LocalDate endDate = currentDate.plusYears(years);
-//
-//            payment.setStartDate(currentDate);
-//            payment.setEndDate(endDate);
-//        } else {
-//            if (endDates.compareTo(LocalDate.now())) {
-//                payment.setStartDate(LocalDate.now());
-//                payment.setEndDate(LocalDate.now().plusYears(years));
-//            }
-//        }
-//
-//        payment.setControl_number("CN-" + System.currentTimeMillis());
-//        paymentRepo.save(payment);
-//        return new ResponseEntity<>(payment.getControl_number(), HttpStatus.OK);
-//    }
-
-
-
+    @PutMapping("/updateStatus/{payment_id}")
+    public ResponseEntity<Payment> updatePaymentStatus(@PathVariable Long payment_id, @RequestBody Payment payment) {
+        Payment existingPayment = paymentRepo.findById(payment_id).orElseThrow();
+        existingPayment.setStatus(payment.getStatus());
+        Payment updatedPayment = paymentRepo.save(existingPayment);
+        return ResponseEntity.ok(updatedPayment);
+    }
 
 }
