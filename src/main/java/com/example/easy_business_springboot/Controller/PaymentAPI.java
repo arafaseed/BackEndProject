@@ -2,8 +2,10 @@ package com.example.easy_business_springboot.Controller;
 
 import com.example.easy_business_springboot.Model.License;
 import com.example.easy_business_springboot.Model.Payment;
+import com.example.easy_business_springboot.Model.User;
 import com.example.easy_business_springboot.Repository.LicenseRepo;
 import com.example.easy_business_springboot.Repository.PaymentRepo;
+import com.example.easy_business_springboot.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class PaymentAPI {
 
     @Autowired
     public LicenseRepo licenseRepo;
+    @Autowired
+    public UserRepo userRepo;
 
     @PostMapping("/addPayment")
     public ResponseEntity<?> addPayment(@RequestBody Payment payment) {
@@ -40,11 +44,6 @@ public class PaymentAPI {
             return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
-
-
 
     @GetMapping("/getallPayment")
     public ResponseEntity<?> getPayment() {

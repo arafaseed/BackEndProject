@@ -2,7 +2,9 @@ package com.example.easy_business_springboot.Controller;
 
 import com.example.easy_business_springboot.Model.Customer;
 import com.example.easy_business_springboot.Model.License;
+import com.example.easy_business_springboot.Model.User;
 import com.example.easy_business_springboot.Repository.LicenseRepo;
+import com.example.easy_business_springboot.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ public class LicenseAPI {
     @Autowired
     public LicenseRepo licenseRepo;
 
-    @PostMapping("/addLicense")
+       @PostMapping("/addLicense")
     public ResponseEntity<?> addLicense(@RequestBody License license){
         try {
 
