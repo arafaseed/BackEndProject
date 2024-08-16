@@ -18,7 +18,6 @@ public class Payment {
 
 
 
-    private Long years;
 
 
 

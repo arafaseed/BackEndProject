@@ -98,4 +98,24 @@ public class PaymentAPI {
         return ResponseEntity.ok(updatedPayment);
     }
 
+
+
+    @PutMapping("/{license_id}")
+    public ResponseEntity<Payment> updatePayment(@PathVariable Long license_id, @RequestBody Payment payment) {
+        Optional<Payment> paymentOptional = paymentRepo.findByLicenseId(license_id);
+        if (!paymentOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        Payment existingPayment = paymentOptional.get();
+
+        existingPayment.setStatus(payment.getStatus());
+        existingPayment.setAmount(payment.getAmount());
+        existingPayment.setControl_number(payment.getControl_number());
+        existingPayment.setLicense_number(payment.getLicense_number());
+
+
+        Payment updatedPayment = paymentRepo.save(existingPayment);
+
+        return ResponseEntity.ok(updatedPayment);
+ }
 }

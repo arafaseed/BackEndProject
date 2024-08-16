@@ -10,4 +10,6 @@ public class EasyBusinessSpringbootApplication {
 		SpringApplication.run(EasyBusinessSpringbootApplication.class, args);
 	}
 
+
+	//For Password Encoder
 }

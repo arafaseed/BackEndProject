@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,21 @@ public class LicenseAPI {
         }
         licenseRepo.save(license);
         return ResponseEntity.ok(license);
+    }
+
+    @PatchMapping("/updateDatesAndAmount/{licence_id}")
+    public ResponseEntity<?> updateDatesAndAmount(@PathVariable Long licence_id, @RequestBody License license) {
+        try {
+            License existingLicense = licenseRepo.findById(licence_id).orElseThrow();
+            existingLicense.setCreated_date(LocalDate.now().toString());
+            existingLicense.setEndDate(license.getEndDate());
+            existingLicense.setAmount(license.getAmount());
+            existingLicense.setNumber_ofYear(license.getNumber_ofYear());
+            License updatedLicense = licenseRepo.save(existingLicense);
+            return new ResponseEntity<>(updatedLicense, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping("/customer/{licence_id}/status")
