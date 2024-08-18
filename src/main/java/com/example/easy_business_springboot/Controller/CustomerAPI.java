@@ -5,6 +5,8 @@ import com.example.easy_business_springboot.Repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,11 +23,19 @@ import java.util.Optional;
 public class CustomerAPI {
     @Autowired
     public CustomerRepo customerRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @PostMapping("/addCustomer")
     public ResponseEntity<?> addApplication(@RequestBody Customer customer){
         try {
+            // Encrypt the password before saving it to the database
+            String encryptedPassword = new BCryptPasswordEncoder().encode(customer.getPassword());
+            customer.setPassword(encryptedPassword);
 
-           Customer customer1 = customerRepo.save(customer);
+            Customer customer1 = customerRepo.save(customer);
             return new ResponseEntity<>(customer1, HttpStatus.OK);
         }catch (Exception exception){
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);

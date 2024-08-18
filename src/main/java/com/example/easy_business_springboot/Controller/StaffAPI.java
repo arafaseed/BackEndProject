@@ -6,6 +6,8 @@ import com.example.easy_business_springboot.Repository.StaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +21,14 @@ public class StaffAPI {
     @Autowired
     public StaffRepo staffRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/addStaff")
     public ResponseEntity<?> addLicense(@RequestBody Staff staff){
         try {
+            String encryptedPassword = new BCryptPasswordEncoder().encode(staff.getPassword());
+            staff.setPassword(encryptedPassword);
 
             Staff staff1 = staffRepo.save(staff);
             return new ResponseEntity<>(staff1, HttpStatus.OK);

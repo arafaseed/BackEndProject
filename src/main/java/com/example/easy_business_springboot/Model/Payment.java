@@ -34,4 +34,7 @@ public class Payment {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public void findByPayment_id(Long payment_id) {
+    }
 }

@@ -2,6 +2,7 @@ package com.example.easy_business_springboot.Controller;
 
 import com.example.easy_business_springboot.Model.License;
 import com.example.easy_business_springboot.Model.Payment;
+import com.example.easy_business_springboot.Model.Staff;
 import com.example.easy_business_springboot.Model.User;
 import com.example.easy_business_springboot.Repository.LicenseRepo;
 import com.example.easy_business_springboot.Repository.PaymentRepo;
@@ -118,4 +119,22 @@ public class PaymentAPI {
 
         return ResponseEntity.ok(updatedPayment);
  }
+
+
+
+//    @PutMapping("update/{payment_id}")
+//    public ResponseEntity<?> updateLicense(@RequestBody Payment payment, @PathVariable Long payment_id){
+//
+//        try {
+//            if (paymentRepo.findByPayment_id(payment_id).isPresent()){
+//                payment.findByPayment_id(payment_id);
+//                Payment payment1 = paymentRepo.save(payment);
+//                return new ResponseEntity<>(payment1,HttpStatus.OK);
+//            }else {
+//                return new ResponseEntity<>("No Payment found",HttpStatus.NOT_FOUND);
+//            }
+//        }catch (Exception exception){
+//            return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
+//        }
+//    }
 }

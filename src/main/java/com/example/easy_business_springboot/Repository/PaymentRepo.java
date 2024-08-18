@@ -1,5 +1,6 @@
 package com.example.easy_business_springboot.Repository;
 
+import com.example.easy_business_springboot.Model.Customer;
 import com.example.easy_business_springboot.Model.License;
 import com.example.easy_business_springboot.Model.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,7 @@ public interface PaymentRepo  extends JpaRepository<Payment,Long> {
 
     @Query("SELECT p FROM Payment p WHERE p.license.licence_id = :license_id")
     Optional<Payment> findByLicenseId(@Param("license_id") Long license_id);
+
+//    Optional<Payment> findByPayment_id(Long payment_id);
 }
 
