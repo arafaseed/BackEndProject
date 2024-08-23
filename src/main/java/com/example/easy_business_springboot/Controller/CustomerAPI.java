@@ -27,7 +27,7 @@ public class CustomerAPI {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+//API YA KUAD CUSTOMER
     @PostMapping("/addCustomer")
     public ResponseEntity<?> addApplication(@RequestBody Customer customer){
         try {
@@ -42,7 +42,7 @@ public class CustomerAPI {
         }
     }
 
-
+//API YA KUPATA CUSTOMER WOTE
     @GetMapping("/getallCustomer")
     public ResponseEntity<?> getCustomer(){
         try {
@@ -57,6 +57,8 @@ public class CustomerAPI {
         }
     }
 
+
+    //API YA KUPATA CUSTOMER KWA KUTUMIA ID
     @GetMapping("/byId/{userID}")
     public ResponseEntity<?> getByID(@PathVariable Long userID ){
         try {
@@ -72,6 +74,7 @@ public class CustomerAPI {
         }
     }
 
+    //API YA KUMUUPDATE CUSTOMER
     @PutMapping("update/{userID}")
     public ResponseEntity<?> updateCustomer(@RequestBody Customer customer,@PathVariable Long userID){
 
@@ -87,6 +90,8 @@ public class CustomerAPI {
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
         }
     }
+
+    //SPI YS KUMFUTA CUSTOMER
     @DeleteMapping("/delete/{userID}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long userID){
         try {

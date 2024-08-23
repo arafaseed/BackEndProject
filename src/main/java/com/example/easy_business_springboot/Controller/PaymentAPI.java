@@ -31,6 +31,8 @@ public class PaymentAPI {
     @Autowired
     public UserRepo userRepo;
 
+
+    //API YA KUFANYA MALIPO
     @PostMapping("/addPayment")
     public ResponseEntity<?> addPayment(@RequestBody Payment payment) {
         try {
@@ -46,6 +48,7 @@ public class PaymentAPI {
         }
     }
 
+    //API YA KUPATA PAYMENT ZOTE
     @GetMapping("/getallPayment")
     public ResponseEntity<?> getPayment() {
         try {
@@ -61,7 +64,7 @@ public class PaymentAPI {
     }
 
 
-
+//API YA KUPATA PAYMENT KWA KUTUMIA ID
     @GetMapping("/byId/{payment_id}")
     public ResponseEntity<?> getByID(@PathVariable Long payment_id) {
         try {
@@ -78,7 +81,7 @@ public class PaymentAPI {
     }
 
 
-
+//API KWA AJILI YA KUFUTA PAYMENT
     @DeleteMapping("/delete/{payment_id}")
     public ResponseEntity<?> deletePayment(@PathVariable Long payment_id){
         try {
@@ -90,7 +93,7 @@ public class PaymentAPI {
     }
 
 
-
+//API KWA AJILI YA KUFANYA STATUS YA PAIMENT IBADILIKE IKIWA TAREHE YA MWISHO IMEFIKA
     @PutMapping("/updateStatus/{payment_id}")
     public ResponseEntity<Payment> updatePaymentStatus(@PathVariable Long payment_id, @RequestBody Payment payment) {
         Payment existingPayment = paymentRepo.findById(payment_id).orElseThrow();
@@ -100,7 +103,7 @@ public class PaymentAPI {
     }
 
 
-
+//API KWA AJILI YA KUAPDATE PAYMENT
     @PutMapping("/{license_id}")
     public ResponseEntity<Payment> updatePayment(@PathVariable Long license_id, @RequestBody Payment payment) {
         Optional<Payment> paymentOptional = paymentRepo.findByLicenseId(license_id);
@@ -112,29 +115,15 @@ public class PaymentAPI {
         existingPayment.setStatus(payment.getStatus());
         existingPayment.setAmount(payment.getAmount());
         existingPayment.setControl_number(payment.getControl_number());
-        existingPayment.setLicense_number(payment.getLicense_number());
 
+        // Generate license number based on payment_id
+        Random random = new Random();
+        String license_number = String.format("%013d", random.nextInt());
+        String license_number1 = license_number;
+        existingPayment.setLicense_number((license_number1));
 
         Payment updatedPayment = paymentRepo.save(existingPayment);
-
         return ResponseEntity.ok(updatedPayment);
- }
+     }
 
-
-
-//    @PutMapping("update/{payment_id}")
-//    public ResponseEntity<?> updateLicense(@RequestBody Payment payment, @PathVariable Long payment_id){
-//
-//        try {
-//            if (paymentRepo.findByPayment_id(payment_id).isPresent()){
-//                payment.findByPayment_id(payment_id);
-//                Payment payment1 = paymentRepo.save(payment);
-//                return new ResponseEntity<>(payment1,HttpStatus.OK);
-//            }else {
-//                return new ResponseEntity<>("No Payment found",HttpStatus.NOT_FOUND);
-//            }
-//        }catch (Exception exception){
-//            return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
-//        }
-//    }
 }

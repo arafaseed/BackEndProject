@@ -33,7 +33,7 @@ public class UserAPI {
         }
     }
 
-
+    //API YA KUPATA USER WOTE
     @GetMapping("/getallUser")
     public ResponseEntity<?> getUser(){
         try {
@@ -47,7 +47,7 @@ public class UserAPI {
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
         }
     }
-
+//API YA KUPATA USER KWA KUTUMIA ID
     @GetMapping("/byIdUser/{userID}")
     public ResponseEntity<?> getByID(@PathVariable Long userID ){
         try {
@@ -78,6 +78,7 @@ public class UserAPI {
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
         }
     }
+    //DELETE USER
     @DeleteMapping("/delete/{userID}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userID){
         try {
@@ -88,6 +89,7 @@ public class UserAPI {
         }
     }
 
+    //API YA KULOGIN
     @GetMapping("/username/{username}")
     public ResponseEntity<?> login(@PathVariable String username, @RequestParam String password){
         try {
@@ -108,6 +110,21 @@ public class UserAPI {
         }
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getUsername(@PathVariable String username){
+        try {
+            Optional<User> userOptional = userRepo.findByUsername(username);
+            if (userOptional.isPresent()){
+                return new ResponseEntity<>(userOptional,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("No user found",HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception exception){
+            return new ResponseEntity<>("Opps",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //
 
     @PutMapping("update/{UserID}")
     public ResponseEntity<?> updateLicense(@RequestBody User user, @PathVariable Long UserID){

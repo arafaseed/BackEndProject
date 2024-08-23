@@ -24,6 +24,8 @@ public class StaffAPI {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    //API YA KUMUAD  STAFF
     @PostMapping("/addStaff")
     public ResponseEntity<?> addLicense(@RequestBody Staff staff){
         try {
@@ -37,7 +39,7 @@ public class StaffAPI {
         }
     }
 
-
+//API YA KUPATA STAFF WOTE
     @GetMapping("/getallSatff")
     public ResponseEntity<?> getStaff(){
         try {
@@ -52,6 +54,8 @@ public class StaffAPI {
         }
     }
 
+
+    //API AY KUPATA STAFF KWA ID
     @GetMapping("/byId/{UserID}")
     public ResponseEntity<?> getByID(@PathVariable Long UserID ){
         try {
@@ -67,6 +71,8 @@ public class StaffAPI {
         }
     }
 
+
+    //API YA KUUPDATE STAFF
     @PutMapping("update/{UserID}")
     public ResponseEntity<?> updateLicense(@RequestBody Staff staff,@PathVariable Long UserID){
 
@@ -82,6 +88,8 @@ public class StaffAPI {
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
         }
     }
+
+    //API YA KUFUTA STAFF
     @DeleteMapping("/delete/{UserID}")
     public ResponseEntity<?> deleteStaff(@PathVariable Long UserID){
         try {

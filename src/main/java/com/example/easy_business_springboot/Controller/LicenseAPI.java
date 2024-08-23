@@ -22,6 +22,8 @@ public class LicenseAPI {
     @Autowired
     public LicenseRepo licenseRepo;
 
+
+    //API YA APPLICATION YA LICENSE
        @PostMapping("/addLicense")
     public ResponseEntity<?> addLicense(@RequestBody License license){
         try {
@@ -32,6 +34,8 @@ public class LicenseAPI {
             return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
         }
     }
+
+    //API YA STATUS YA LICENSE EITHER PENDING, ACCEPTED OR CANCEL KWA AJILI YA STAFF
     @PatchMapping("{licence_id}/status")
     public ResponseEntity<License> updateStatus(@PathVariable long licence_id){
         License license = licenseRepo.findById(licence_id).orElseThrow();
@@ -44,6 +48,20 @@ public class LicenseAPI {
         return ResponseEntity.ok(license);
     }
 
+
+    //API YA STATUS YA LICENSE EITHER PENDING, ACCEPTED OR CANCEL KWA AJILI YA CUSTOMER
+    @PatchMapping("/customer/{licence_id}/status")
+    public ResponseEntity<License> updatesStatus(@PathVariable long licence_id){
+        License license = licenseRepo.findById(licence_id).orElseThrow();
+        if (license.getStatus().equals("Pending")){
+
+            license.setStatus("Cancel");
+        }
+        licenseRepo.save(license);
+        return ResponseEntity.ok(license);
+    }
+
+    //API YA KUUPDATE LICENSE KUBADILI MIAKA NA TAREHE
     @PatchMapping("/updateDatesAndAmount/{licence_id}")
     public ResponseEntity<?> updateDatesAndAmount(@PathVariable Long licence_id, @RequestBody License license) {
         try {
@@ -59,17 +77,8 @@ public class LicenseAPI {
         }
     }
 
-    @PatchMapping("/customer/{licence_id}/status")
-    public ResponseEntity<License> updatesStatus(@PathVariable long licence_id){
-        License license = licenseRepo.findById(licence_id).orElseThrow();
-        if (license.getStatus().equals("Pending")){
 
-            license.setStatus("Cancel");
-        }
-        licenseRepo.save(license);
-        return ResponseEntity.ok(license);
-    }
-
+//API YA KUPATA LESENI ZOTE
     @GetMapping("/getallLicense")
     public ResponseEntity<?> getLicense(){
         try {
@@ -84,6 +93,8 @@ public class LicenseAPI {
         }
     }
 
+
+    //API YA KUPATA LESENI KWA KUTUMIA ID
     @GetMapping("/byId/{licence_id}")
     public ResponseEntity<?> getByID(@PathVariable Long licence_id ){
         try {
@@ -99,21 +110,23 @@ public class LicenseAPI {
         }
     }
 
-    @PutMapping("update/{licence_id}")
-    public ResponseEntity<?> updateLicense(@RequestBody License license,@PathVariable Long licence_id){
+//    @PutMapping("update/{licence_id}")
+//    public ResponseEntity<?> updateLicense(@RequestBody License license,@PathVariable Long licence_id){
+//
+//        try {
+//            if (licenseRepo.findById(licence_id).isPresent()){
+//                license.setLicence_id(licence_id);
+//                License license1 = licenseRepo.save(license);
+//                return new ResponseEntity<>(license1,HttpStatus.OK);
+//            }else {
+//                return new ResponseEntity<>("No Customer found",HttpStatus.NOT_FOUND);
+//            }
+//        }catch (Exception exception){
+//            return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
-        try {
-            if (licenseRepo.findById(licence_id).isPresent()){
-                license.setLicence_id(licence_id);
-                License license1 = licenseRepo.save(license);
-                return new ResponseEntity<>(license1,HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>("No Customer found",HttpStatus.NOT_FOUND);
-            }
-        }catch (Exception exception){
-            return new ResponseEntity<>("Something went wrong",HttpStatus.BAD_REQUEST);
-        }
-    }
+    //API YA KUFUTA LESENI
     @DeleteMapping("/delete/{licence_id}")
     public ResponseEntity<?> deleteLicense(@PathVariable Long licence_id){
         try {

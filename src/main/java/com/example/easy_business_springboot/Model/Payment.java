@@ -22,7 +22,7 @@ public class Payment {
 
 
 
-    @ManyToOne
+   @OneToOne
     @JoinColumn(name = "licence_id")
     private License license;
 
