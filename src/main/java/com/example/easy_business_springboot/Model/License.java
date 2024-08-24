@@ -25,9 +25,12 @@ public class License {
     private String status;
     private int number_ofYear;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "customerId")
     public Customer customer;
+
+    @OneToOne(mappedBy = "license", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private Payment payment;
 
     @PrePersist
     void createdAt() {

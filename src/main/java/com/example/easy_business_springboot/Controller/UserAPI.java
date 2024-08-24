@@ -115,14 +115,15 @@ public class UserAPI {
         try {
             Optional<User> userOptional = userRepo.findByUsername(username);
             if (userOptional.isPresent()){
-                return new ResponseEntity<>(userOptional,HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>("No user found",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Username already exists", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No user found", HttpStatus.NOT_FOUND);
             }
-        }catch (Exception exception){
-            return new ResponseEntity<>("Opps",HttpStatus.BAD_REQUEST);
+        } catch (Exception exception) {
+            return new ResponseEntity<>("Oops, something went wrong.", HttpStatus.BAD_REQUEST);
         }
     }
+
 
     //
 
