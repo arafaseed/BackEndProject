@@ -1,5 +1,7 @@
 package com.example.easy_business_springboot.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,7 +14,9 @@ public class Customer extends User {
     private String zan_Id;
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<License> licenses;
+//    @OneTMany(mappedBy = "customer", cascade = CascadeType.MERGE, orphanRemoval = true)
+////    private List<License> licenses;o
+
+
 
 }

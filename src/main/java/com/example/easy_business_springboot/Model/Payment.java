@@ -16,13 +16,7 @@ public class Payment {
     private String control_number;
     private String license_number;
 
-
-
-
-
-
-
-   @OneToOne
+    @OneToOne
     @JoinColumn(name = "licence_id")
     private License license;
 

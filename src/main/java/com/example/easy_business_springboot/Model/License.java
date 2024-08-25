@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,8 +32,11 @@ public class License {
     @JoinColumn(name = "customerId")
     public Customer customer;
 
-    @OneToOne(mappedBy = "license", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private Payment payment;
+//    @ManyToOne
+//    @JoinColumn(name = "customerId")
+//    @JsonIgnore
+//    public Customer customer;
+
 
     @PrePersist
     void createdAt() {
